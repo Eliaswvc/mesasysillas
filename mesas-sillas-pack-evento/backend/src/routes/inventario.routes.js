@@ -1,0 +1,10 @@
+const r = require('express').Router();
+const h = require('../utils/asyncHandler');
+const auth = require('../middleware/auth');
+const roles = require('../middleware/roles');
+const c = require('../controllers/inventario.controller');
+r.use(auth);
+r.get('/', h(c.listar));
+r.post('/', roles('ADMIN'), h(c.crear));
+r.put('/:id', roles('ADMIN'), h(c.actualizar));
+module.exports = r;
